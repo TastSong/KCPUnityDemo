@@ -733,7 +733,7 @@ public class Kcp implements IKcp {
 
             conv = data.readIntLE();
             if (conv != this.conv) {
-                return -4;
+               // return -4;
             }
 
             cmd = data.readByte();
