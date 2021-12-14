@@ -1,3 +1,0 @@
-INDEX VERSION 1.131+F:\Github\KCPUnityDemo\.metadata\.plugins\org.eclipse.jdt.core
-1865797976.index
-1663294070.index
