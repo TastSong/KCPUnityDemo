@@ -34,11 +34,11 @@ public class KcpTest : MonoBehaviour {
         portText.text = port.ToString();
 
         connectBtn.onClick.AddListener(() => {
-            kcpManager.ConnectKcp(host, port);
+            kcpManager.Connect(host, port);
         });
 
         closeBtn.onClick.AddListener(() => {
-            kcpManager.Stop();
+            kcpManager.Close();
         });
 
         sendBtn.onClick.AddListener(() => {

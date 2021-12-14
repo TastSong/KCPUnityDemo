@@ -55,7 +55,7 @@ public class Kcp4sharpExampleServer implements KcpListener {
 
     @Override
     public void handleClose(Ukcp kcp) {
-        System.out.println(Snmp.snmp.toString());
+        System.out.println("handleClose " + Snmp.snmp.toString());
         Snmp.snmp  = new Snmp();
     }
 }

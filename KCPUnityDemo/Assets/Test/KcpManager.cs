@@ -14,14 +14,16 @@ public class KcpManager : KcpClient {
     }
 
     protected override void HandleException(Exception ex) {
+        Debug.LogError("+++++ HandleException");
         base.HandleException(ex);
     }
 
     protected override void HandleTimeout() {
+        Debug.LogError("+++++ HandleTimeout");
         base.HandleTimeout();
     }
 
-    public void ConnectKcp(string host, int port) {
+    public void Connect(string host, int port) {
         client = new KcpManager();
         client.NoDelay(1, 10, 2, 1);
         client.WndSize(64, 64);
@@ -34,12 +36,17 @@ public class KcpManager : KcpClient {
     }
 
     public void Send(string content) {
-        ByteBuf bb = new ByteBuf(System.Text.Encoding.UTF8.GetBytes(content));
-        Debug.Log(bb.ReadableBytes());
-        client.Send(bb);
+        if (client != null && client.IsRunning()) {
+            ByteBuf bb = new ByteBuf(System.Text.Encoding.UTF8.GetBytes(content));
+            Debug.Log(bb.ReadableBytes());
+            client.Send(bb);
+        }     
     }
 
-    public void Close() {
-        client.Stop();
+    public void Close() {       
+        if (client != null) {
+            client.Stop();
+            Debug.LogError("++++++ client.IsRunning() = " + client.IsRunning());
+        }       
     }
 }
