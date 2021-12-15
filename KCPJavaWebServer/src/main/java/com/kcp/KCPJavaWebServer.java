@@ -18,7 +18,9 @@ import kcp.Ukcp;
  */
 public class KCPJavaWebServer extends HttpServlet implements KcpListener {
 	private static final long serialVersionUID = 1L;
-       
+
+	private boolean isInit = false;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,6 +34,14 @@ public class KCPJavaWebServer extends HttpServlet implements KcpListener {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		if (!isInit) {
+			initKCP();
+			isInit = true;
+		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+	
+	private void initKCP() {
 		KCPJavaWebServer kcpRttExampleServer = new KCPJavaWebServer();
 
         ChannelConfig channelConfig = new ChannelConfig();
@@ -47,9 +57,7 @@ public class KCPJavaWebServer extends HttpServlet implements KcpListener {
         //c# crc32未实现
         channelConfig.setCrc32Check(false);
         KcpServer kcpServer = new KcpServer();
-        kcpServer.init(kcpRttExampleServer,channelConfig,40001);
-        
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+        kcpServer.init(kcpRttExampleServer,channelConfig,40001);     
 	}
 
 	/**
@@ -62,14 +70,14 @@ public class KCPJavaWebServer extends HttpServlet implements KcpListener {
 	
 	@Override
     public void onConnected(Ukcp ukcp) {
-        System.out.println("有连接进来"+Thread.currentThread().getName()+ukcp.user().getRemoteAddress());
+        System.out.println("Connected : "+Thread.currentThread().getName()+ukcp.user().getRemoteAddress());
     }
 
     @Override
     public void handleReceive(ByteBuf buf, Ukcp kcp) {
         byte[] bytes = new  byte[buf.readableBytes()];
         buf.getBytes(buf.readerIndex(),bytes);
-        System.out.println("收到消息: "+new String(bytes));
+        System.out.println("Receive: "+new String(bytes));
         kcp.write(buf);
     }
 
