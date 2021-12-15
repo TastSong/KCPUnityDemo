@@ -14,16 +14,19 @@ public class KcpManager : KcpClient {
     }
 
     protected override void HandleException(Exception ex) {
-        Debug.LogError("+++++ HandleException");
+        Debug.Log("+++++ HandleException");
         base.HandleException(ex);
     }
 
     protected override void HandleTimeout() {
-        Debug.LogError("+++++ HandleTimeout");
+        Debug.Log("+++++ HandleTimeout");
         base.HandleTimeout();
     }
 
-    public void Connect(string host, int port) {
+    public void ConnectKCP(string host, int port) {
+        if (client != null && client.IsRunning()) {
+            return;
+        }
         client = new KcpManager();
         client.NoDelay(1, 10, 2, 1);
         client.WndSize(64, 64);
@@ -46,7 +49,7 @@ public class KcpManager : KcpClient {
     public void Close() {       
         if (client != null) {
             client.Stop();
-            Debug.LogError("++++++ client.IsRunning() = " + client.IsRunning());
+            Debug.Log("++++++ client.IsRunning() = " + client.IsRunning());
         }       
     }
 }

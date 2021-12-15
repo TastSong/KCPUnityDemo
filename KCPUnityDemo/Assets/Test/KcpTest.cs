@@ -34,7 +34,7 @@ public class KcpTest : MonoBehaviour {
         portText.text = port.ToString();
 
         connectBtn.onClick.AddListener(() => {
-            kcpManager.Connect(host, port);
+            kcpManager.ConnectKCP(host, port);
         });
 
         closeBtn.onClick.AddListener(() => {
@@ -46,7 +46,7 @@ public class KcpTest : MonoBehaviour {
         });
 
         token = GameController.manager.tinyMsgHub.Subscribe<UpdateUIMsg>((m) => {
-            Debug.LogError("++++++Receive  = " + m.str);
+            Debug.Log("++++++Receive  = " + m.str);
             recStr = m.str;
             isRec = true;
         });
