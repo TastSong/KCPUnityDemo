@@ -53,6 +53,7 @@ public class KcpTest : MonoBehaviour {
     }
 
     private void Update() {
+        // KCP是开的线程进行数据的收发，所以只能将UI的操作放进主线程，Unity的2B规则
         if (isRec) {
             contentText.text = contentText.text + "\n" + recStr;
             isRec = false;

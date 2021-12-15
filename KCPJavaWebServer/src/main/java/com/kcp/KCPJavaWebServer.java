@@ -1,4 +1,10 @@
-package com.kcp.KCPServer;
+package com.kcp;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.backblaze.erasure.fec.Snmp;
 import io.netty.buffer.ByteBuf;
@@ -8,15 +14,25 @@ import kcp.KcpServer;
 import kcp.Ukcp;
 
 /**
- * 与c#版本兼容的客户端
- * Created by JinMiao
- * 2019-07-23.
+ * Servlet implementation class KCPJavaWebServer
  */
-public class Kcp4sharpExampleServer implements KcpListener {
+public class KCPJavaWebServer extends HttpServlet implements KcpListener {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public KCPJavaWebServer() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-    public static void main(String[] args) {
-
-        Kcp4sharpExampleServer kcpRttExampleServer = new Kcp4sharpExampleServer();
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		KCPJavaWebServer kcpRttExampleServer = new KCPJavaWebServer();
 
         ChannelConfig channelConfig = new ChannelConfig();
         channelConfig.nodelay(true,10,2,true);
@@ -32,10 +48,19 @@ public class Kcp4sharpExampleServer implements KcpListener {
         channelConfig.setCrc32Check(false);
         KcpServer kcpServer = new KcpServer();
         kcpServer.init(kcpRttExampleServer,channelConfig,40001);
-    }
+        
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
 
-
-    @Override
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	@Override
     public void onConnected(Ukcp ukcp) {
         System.out.println("有连接进来"+Thread.currentThread().getName()+ukcp.user().getRemoteAddress());
     }
@@ -58,4 +83,5 @@ public class Kcp4sharpExampleServer implements KcpListener {
         System.out.println("handleClose " + Snmp.snmp.toString());
         Snmp.snmp  = new Snmp();
     }
+
 }
