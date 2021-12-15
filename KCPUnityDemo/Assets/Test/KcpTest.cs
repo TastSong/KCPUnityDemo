@@ -19,6 +19,7 @@ public class KcpTest : MonoBehaviour {
     public Button connectBtn;
     public Button closeBtn;
     public Text contentText;
+    public Scrollbar contentScrollbar;
     public InputField inputField;
     public Button sendBtn;
 
@@ -56,6 +57,7 @@ public class KcpTest : MonoBehaviour {
         // KCP是开的线程进行数据的收发，所以只能将UI的操作放进主线程，Unity的2B规则
         if (isRec) {
             contentText.text = contentText.text + "\n" + recStr;
+            contentScrollbar.value = 0;
             isRec = false;
         }
     }

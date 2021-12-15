@@ -321,6 +321,7 @@ MonoBehaviour:
   connectBtn: {fileID: 805328933}
   closeBtn: {fileID: 523215503}
   contentText: {fileID: 910617139}
+  contentScrollbar: {fileID: 933553840}
   inputField: {fileID: 408434366}
   sendBtn: {fileID: 621633067}
 --- !u!1 &232920001
@@ -2127,7 +2128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 910617136}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
